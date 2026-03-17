@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import { config } from './config/env';
 import { logger } from './utils/logger';
 import routes from './routes';
+import { sendErrorResponse } from './utils/response';
 import { errorMiddleware } from './middlewares/error.middleware';
 
 const { port } = config;
@@ -18,6 +19,11 @@ app.get('/', (_req: Request, res: Response) => {
 });
 
 app.use('/api', routes);
+
+app.use((_req: Request, res: Response) => {
+  sendErrorResponse(res, 'Endpoint not found', 404);
+});
+
 app.use(errorMiddleware);
 
 const startServer = () => {
