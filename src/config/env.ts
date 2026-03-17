@@ -1,5 +1,4 @@
 import dotenv from 'dotenv';
-
 dotenv.config();
 
 export const config = {
@@ -22,7 +21,6 @@ export const config = {
   publicKey: process.env.PUBLIC_KEY || 'default_public_key'
 };
 
-// Simple validation to ensure critical keys are present in production
 if (config.env === 'production') {
   if (!config.db.url || !config.jwt.secret || !config.encryption.key || !config.encryption.iv || !config.publicKey) {
     console.warn('⚠️ CRITICAL: Missing configuration in production environment!');

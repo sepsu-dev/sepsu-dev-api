@@ -13,8 +13,6 @@ export const sendSuccessResponse = (
     timestamp: new Date().toISOString()
   };
 
-  console.log(payload)
-
   const encryptedPayload = encrypt(payload);
 
   return res.status(statusCode).json({

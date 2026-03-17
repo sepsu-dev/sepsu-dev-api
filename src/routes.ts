@@ -11,34 +11,16 @@ function loadRoutes() {
   });
 
   for (const moduleName of modules) {
-    const possibleFiles = [
-      `${moduleName}.routes.ts`,
-      `${moduleName}.route.ts`,
-      `${moduleName}.routes.js`,
-      `${moduleName}.route.js`,
-      'index.ts',
-      'index.js'
-    ];
+    const routeFile = path.join(modulesPath, moduleName, `${moduleName}.route.ts`);
 
-    let routeFile = '';
-    for (const file of possibleFiles) {
-      const fullPath = path.join(modulesPath, moduleName, file);
-      if (fs.existsSync(fullPath)) {
-        routeFile = fullPath;
-        break;
-      }
-    }
-
-    if (routeFile) {
+    if (fs.existsSync(routeFile)) {
       try {
         const mod = require(routeFile);
-        
         const routeHandler = mod.default || mod;
         const routePrefix = mod.prefix || `/${moduleName}`;
 
         if (routeHandler) {
           router.use(routePrefix, routeHandler);
-          console.log(`✅ [AutoRoute] Registered: ${routePrefix} (from module: ${moduleName})`);
         }
       } catch (error) {
         console.error(`❌ [AutoRoute] Failed to load module '${moduleName}':`, error);

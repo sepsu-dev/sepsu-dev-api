@@ -14,7 +14,6 @@ export const authMiddleware = (
 ) => {
   const authHeader = req.headers.authorization;
 
-  // Check for JWT Bearer Token Authentication
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     const error: AppError = new Error('Unauthorized: Missing bearer token');
     error.statusCode = 401;
